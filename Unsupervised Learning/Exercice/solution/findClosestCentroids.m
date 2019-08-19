@@ -22,34 +22,21 @@ idx = zeros(size(X,1), 1);
 %
 
 
-cent_min=1000000;
+for i = 1:length(idx)
 
-min_index=0;
+    distance = zeros(K, 1);
 
-for i=1:m
+    for j = 1:K
 
-  for j=1:K
+        % TODO(SaveTheRbtz@): Can be vectorized as diff * diff'
 
-    c=(1/m)*sum((X(i,:)-centroids(j,:)).^2);
+        distance(j) = sum(sum((X(i, :) - centroids(j, :)) .^ 2 ));
 
-    if c<cent_min
+    endfor
 
-      min_index=j;
+    [value, idx(i)] = min(distance);
 
-      cent_min=c;
-
-    end
-
-  end
-
-  idx(i)=min_index;
-
-  cent_min=1000000;
-
-  min_index=0;
-
-end
-
+endfor
 
 
 
